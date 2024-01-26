@@ -21,8 +21,11 @@ from investigraph.util import PathLike, is_module
 
 log = logging.getLogger(__name__)
 
+class ExpandMixin:
+    def __init__(self, **data):
+        super().__init__(**expandvars(data))
 
-class Config(BaseModel, YamlMixin, RemoteMixin):
+class Config(BaseModel, YamlMixin, RemoteMixin, ExpandMixin):
     dataset: Dataset
     base_path: Path | None = Path()
     seed: SeedStage | None = SeedStage()
